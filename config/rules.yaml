@@ -1,0 +1,100 @@
+DQ01:
+  version: '1.0'
+  severity: ERROR
+  description: Complete manifest and all four tables
+  threshold: 0
+DQ02:
+  version: '1.0'
+  severity: ERROR
+  description: File/page checksums and row counts
+  threshold: 0
+DQ03:
+  version: '1.0'
+  severity: ERROR
+  description: Contract fields and types
+  threshold: 0
+DQ04:
+  version: '1.0'
+  severity: ERROR
+  description: Non-empty business keys
+  threshold: 0
+DQ05:
+  version: '1.0'
+  severity: ERROR
+  description: Unique business keys
+  threshold: 0
+DQ06:
+  version: '1.0'
+  severity: ERROR
+  description: Order customer exists
+  threshold: 0
+DQ07:
+  version: '1.0'
+  severity: ERROR
+  description: Item and payment order exists
+  threshold: 0
+DQ08:
+  version: '1.0'
+  severity: ERROR
+  description: Every order has items
+  threshold: 0
+DQ09:
+  version: '1.0'
+  severity: ERROR
+  description: Allowed statuses and payment kinds
+  threshold: 0
+DQ10:
+  version: '1.0'
+  severity: ERROR
+  description: Non-negative money and positive quantities
+  threshold: 0
+DQ11:
+  version: '1.0'
+  severity: ERROR
+  description: Single allowed currency
+  threshold: 0
+DQ12:
+  version: '1.0'
+  severity: ERROR
+  description: Items equal order amount
+  threshold: 0
+DQ13:
+  version: '1.0'
+  severity: ERROR
+  description: Completed orders fully paid
+  threshold: 0
+DQ14:
+  version: '1.0'
+  severity: ERROR
+  description: Refunds bounded by captured payments
+  threshold: 0
+DQ15:
+  version: '1.0'
+  severity: ERROR
+  description: Period membership and temporal consistency
+  threshold: 0
+DQ16:
+  version: '1.0'
+  severity: ERROR
+  description: Independent source control totals
+  threshold: 0
+DQ17:
+  version: '1.0'
+  severity: ERROR
+  description: Independent reconciliation of marts
+  threshold: 0
+DQ18:
+  version: '1.0'
+  severity: ERROR
+  description: Expected business-calendar delivery
+  threshold: 0
+DQ19:
+  version: '1.0'
+  severity: WARN
+  description: Volume anomaly against comparable days
+  threshold: 0.5
+DQ20:
+  version: '1.0'
+  severity: WARN
+  description: Cancelled orders retain collected payments
+  threshold: 0

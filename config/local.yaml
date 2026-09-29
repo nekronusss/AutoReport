@@ -1,0 +1,14 @@
+environment: local
+dataset: orders
+timezone: Asia/Qyzylorda
+currency: KZT
+source:
+  type: csv
+  directory: data/demo
+database:
+  host: 127.0.0.1
+  port: 55432
+  password_dir: secrets
+artifacts:
+  root: data/artifacts
+  raw: data/raw

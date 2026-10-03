@@ -1,0 +1,13 @@
+name: dqflow
+version: '1.0.0'
+config-version: 2
+profile: dqflow
+model-paths: [models]
+test-paths: [tests]
+models:
+  dqflow:
+    +materialized: table
+    +post-hook: 'ANALYZE {{ this }}'
+flags:
+  send_anonymous_usage_stats: false
+

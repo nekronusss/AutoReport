@@ -1,0 +1,18 @@
+dqflow:
+  target: runner
+  outputs:
+    runner:
+      type: postgres
+      host: "{{ env_var('DQ_DB_HOST') }}"
+      port: "{{ env_var('DQ_DB_PORT') | int }}"
+      dbname: "{{ env_var('DQ_DB_NAME') }}"
+      user: dqflow_runner
+      password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}"
+      schema: "{{ env_var('DQ_SCHEMA') }}"
+      sslmode: "{{ env_var('DQ_DB_SSLMODE', 'prefer') }}"
+      sslrootcert: "{{ env_var('DQ_DB_SSLROOTCERT', '') }}"
+      threads: 2
+      connect_timeout: 5
+      retries: 0
+      options: '-c statement_timeout=300000 -c lock_timeout=10000'
+

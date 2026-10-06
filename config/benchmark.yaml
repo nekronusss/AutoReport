@@ -1,0 +1,16 @@
+environment: test
+dataset: benchmark
+timezone: Asia/Qyzylorda
+currency: KZT
+source:
+  type: http
+  base_url: http://127.0.0.1:18000
+  directory: data/demo
+database:
+  host: 127.0.0.1
+  port: 55432
+  database: dqflow_benchmark
+  password_dir: secrets
+artifacts:
+  root: data/benchmark/artifacts
+  raw: data/benchmark/raw

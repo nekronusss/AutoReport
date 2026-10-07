@@ -1,0 +1,8 @@
+[Unit]
+Description=dqflow backup timer
+[Timer]
+OnCalendar=*-*-* 02:00:00 Asia/Qyzylorda
+Persistent=true
+Unit=dqflow-backup.service
+[Install]
+WantedBy=timers.target

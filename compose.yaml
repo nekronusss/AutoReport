@@ -1,0 +1,91 @@
+name: dqflow
+x-app: &app
+  image: ${DQFLOW_IMAGE:-dqflow:0.1.0}
+  environment:
+    DQFLOW_CONFIG: /app/config/docker.yaml
+  volumes:
+    - ./data:/data
+  networks: [internal]
+  mem_limit: 2g
+  cpus: 2
+  logging: &logging
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+services:
+  postgres:
+    image: postgres:17.9-bookworm
+    environment:
+      POSTGRES_DB: dqflow
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_admin_password
+    secrets: [db_admin_password]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    networks: [internal]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U postgres -d dqflow']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    mem_limit: 3g
+    cpus: 2
+    logging: *logging
+  runner:
+    <<: *app
+    secrets: [db_runner_password, db_publisher_password, db_reader_password, db_migrator_password]
+  migrator:
+    <<: *app
+    command: [migrate]
+    secrets: [db_migrator_password]
+    profiles: [jobs]
+  bootstrap-roles:
+    <<: *app
+    command: [bootstrap-roles]
+    secrets: [db_admin_password, db_migrator_password, db_runner_password, db_publisher_password, db_reader_password]
+    profiles: [jobs]
+  report-web:
+    <<: *app
+    volumes: !override [./data/artifacts:/data/artifacts:ro]
+    read_only: true
+    tmpfs: [/tmp]
+    command: [serve, --host, 0.0.0.0, --port, '8080']
+    secrets: [db_reader_password]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+  metrics-exporter:
+    <<: *app
+    volumes: !override [./data/artifacts:/data/artifacts:ro]
+    read_only: true
+    tmpfs: [/tmp]
+    command: [serve, --host, 0.0.0.0, --port, '9100']
+    secrets: [db_reader_password]
+    restart: unless-stopped
+    profiles: [monitoring]
+  prometheus:
+    image: prom/prometheus:v3.7.3
+    volumes: [./ops/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro, ./ops/monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro, prometheus:/prometheus]
+    networks: [internal]
+    restart: unless-stopped
+    profiles: [monitoring]
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    volumes: [./ops/monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro]
+    networks: [internal]
+    restart: unless-stopped
+    profiles: [monitoring]
+volumes:
+  pgdata:
+  prometheus:
+networks:
+  internal:
+secrets:
+  db_admin_password: {file: ./secrets/db_admin_password}
+  db_migrator_password: {file: ./secrets/db_migrator_password}
+  db_runner_password: {file: ./secrets/db_runner_password}
+  db_publisher_password: {file: ./secrets/db_publisher_password}
+  db_reader_password: {file: ./secrets/db_reader_password}

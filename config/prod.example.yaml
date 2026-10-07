@@ -1,0 +1,21 @@
+environment: production
+dataset: orders
+timezone: Asia/Qyzylorda
+currency: KZT
+source:
+  type: http
+  base_url: https://source.example.invalid
+  token_file: /run/secrets/source_token
+database:
+  host: postgres.example.invalid
+  database: dqflow
+  password_dir: /run/secrets
+  sslmode: verify-full
+  sslrootcert: /etc/dqflow/certs/ca.pem
+artifacts:
+  root: /data/artifacts
+  raw: /data/raw
+notifications:
+  endpoint: https://alerts.example.invalid/events
+  token_file: /run/secrets/webhook_token
+

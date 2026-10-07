@@ -1,0 +1,9 @@
+route:
+  receiver: operator
+  group_by: [alertname]
+  group_wait: 30s
+  repeat_interval: 4h
+receivers:
+  - name: operator
+# Configure the operator's authenticated receiver before production activation.
+

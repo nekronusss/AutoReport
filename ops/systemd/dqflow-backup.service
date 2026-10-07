@@ -1,0 +1,12 @@
+[Unit]
+Description=dqflow backup
+Requires=docker.service
+After=docker.service network-online.target
+[Service]
+Type=oneshot
+User=dqflow-ops
+EnvironmentFile=/etc/dqflow/ops.env
+ExecStart=/opt/dqflow/current/ops/backup.sh
+TimeoutStartSec=7200
+UMask=0077
+

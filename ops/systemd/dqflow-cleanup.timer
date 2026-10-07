@@ -1,0 +1,8 @@
+[Unit]
+Description=dqflow cleanup timer
+[Timer]
+OnCalendar=*-*-* 03:00:00 Asia/Qyzylorda
+Persistent=true
+Unit=dqflow-cleanup.service
+[Install]
+WantedBy=timers.target

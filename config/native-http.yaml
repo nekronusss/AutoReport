@@ -1,0 +1,18 @@
+environment: local
+dataset: orders
+timezone: Asia/Qyzylorda
+currency: KZT
+source:
+  type: http
+  base_url: http://127.0.0.1:18000
+  directory: data/demo
+database:
+  database: dqflow_demo
+  host: 127.0.0.1
+  port: 55432
+  password_dir: secrets
+artifacts:
+  root: data/artifacts
+  raw: data/raw
+notifications:
+  endpoint: http://127.0.0.1:18001/events

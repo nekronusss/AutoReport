@@ -1,0 +1,35 @@
+services:
+  runner:
+    build: .
+  bootstrap:
+    image: ${DQFLOW_IMAGE:-dqflow:0.1.0}
+    build: .
+    user: '0:0'
+    entrypoint: [python, /app/ops/local_init.py]
+    volumes: [./secrets:/secrets, ./data:/data]
+    profiles: [jobs]
+  report-web:
+    ports: ['127.0.0.1:8080:8080']
+  source-demo:
+    image: ${DQFLOW_IMAGE:-dqflow:0.1.0}
+    command: [serve, --kind, source, --host, 0.0.0.0, --port, '8000']
+    environment: {DQFLOW_DEMO_ROOT: /data/demo}
+    volumes: [./data/demo:/data/demo:ro]
+    networks: [internal]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      retries: 10
+  mock-webhook:
+    image: ${DQFLOW_IMAGE:-dqflow:0.1.0}
+    command: [serve, --kind, mock, --host, 0.0.0.0, --port, '8001']
+    environment: {DQFLOW_MOCK_ROOT: /data/mock}
+    volumes: [./data/mock:/data/mock]
+    networks: [internal]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 5s
+      retries: 10
+

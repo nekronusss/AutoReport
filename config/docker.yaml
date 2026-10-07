@@ -1,0 +1,17 @@
+environment: local
+dataset: orders
+timezone: Asia/Qyzylorda
+currency: KZT
+source:
+  type: http
+  base_url: http://source-demo:8000
+  directory: /data/demo
+database:
+  host: postgres
+  password_dir: /run/secrets
+artifacts:
+  root: /data/artifacts
+  raw: /data/raw
+notifications:
+  endpoint: http://mock-webhook:8001/events
+

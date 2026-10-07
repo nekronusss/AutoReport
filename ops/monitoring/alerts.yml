@@ -1,0 +1,32 @@
+groups:
+  - name: dqflow
+    rules:
+      - alert: DqflowSchedulerMissing
+        expr: time() - dqflow_scheduler_timestamp > 1200
+        for: 1m
+        labels: {severity: critical}
+        annotations: {summary: 'Scheduler heartbeat missing'}
+      - alert: DqflowReportDelayed
+        expr: dqflow_outbox_oldest_seconds > 300
+        for: 1m
+        labels: {severity: warning}
+      - alert: DqflowRunStuck
+        expr: dqflow_run_heartbeat_age_seconds > 180
+        labels: {severity: critical}
+      - alert: DqflowBackupOld
+        expr: time() - dqflow_external_backup_timestamp > 93600
+        labels: {severity: critical}
+      - alert: DqflowDiskWarning
+        expr: dqflow_disk_used_ratio > 0.70
+        labels: {severity: warning}
+      - alert: DqflowDiskCritical
+        expr: dqflow_disk_used_ratio > 0.85
+        labels: {severity: critical}
+      - alert: DqflowStaleData
+        expr: time() - dqflow_source_as_of_timestamp > 108000
+        labels: {severity: critical}
+      - alert: DqflowUnavailable
+        expr: up{job='dqflow'} == 0
+        for: 2m
+        labels: {severity: critical}
+

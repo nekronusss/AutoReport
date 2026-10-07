@@ -1,0 +1,35 @@
+# This override requires externally provisioned TLS/auth proxy, source and secrets.
+x-production: &production
+  image: ${DQFLOW_IMAGE:?Set registry image@sha256 digest}
+  environment:
+    DQFLOW_CONFIG: /etc/dqflow/config.yaml
+  volumes:
+    - /srv/dqflow:/data
+    - /etc/dqflow/config.yaml:/etc/dqflow/config.yaml:ro
+    - /etc/dqflow/certs:/etc/dqflow/certs:ro
+services:
+  runner:
+    <<: *production
+    secrets: !override [db_runner_password, db_publisher_password, db_reader_password, source_token, webhook_token]
+  migrator:
+    <<: *production
+    secrets: !override [db_migrator_password]
+  report-web:
+    <<: *production
+    volumes: !override [/srv/dqflow/artifacts:/data/artifacts:ro, /etc/dqflow/config.yaml:/etc/dqflow/config.yaml:ro, /etc/dqflow/certs:/etc/dqflow/certs:ro]
+    secrets: !override [db_reader_password]
+    ports: ['127.0.0.1:8080:8080']
+  metrics-exporter:
+    <<: *production
+    volumes: !override [/srv/dqflow/artifacts:/data/artifacts:ro, /etc/dqflow/config.yaml:/etc/dqflow/config.yaml:ro, /etc/dqflow/certs:/etc/dqflow/certs:ro]
+    secrets: !override [db_reader_password]
+  postgres:
+    volumes: !override [/srv/dqflow/postgres:/var/lib/postgresql/data]
+secrets:
+  db_admin_password: {file: /etc/dqflow/secrets/db_admin_password}
+  db_migrator_password: {file: /etc/dqflow/secrets/db_migrator_password}
+  db_runner_password: {file: /etc/dqflow/secrets/db_runner_password}
+  db_publisher_password: {file: /etc/dqflow/secrets/db_publisher_password}
+  db_reader_password: {file: /etc/dqflow/secrets/db_reader_password}
+  source_token: {file: /etc/dqflow/secrets/source_token}
+  webhook_token: {file: /etc/dqflow/secrets/webhook_token}

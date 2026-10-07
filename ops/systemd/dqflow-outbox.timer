@@ -1,0 +1,8 @@
+[Unit]
+Description=dqflow outbox timer
+[Timer]
+OnCalendar=*-*-* *:*:00
+Persistent=true
+Unit=dqflow-outbox.service
+[Install]
+WantedBy=timers.target

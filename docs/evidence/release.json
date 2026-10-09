@@ -1,0 +1,17 @@
+{
+  "code_version": "19cc66db94e0d1aa",
+  "uv_lock_sha256": "562dabf508b6ec0d57bc05bcd590c7fa580f928f29549af43d6de651899e6ca5",
+  "schema_revision": "002",
+  "unique_tests_passed": 47,
+  "demo": {
+    "duration_ms": 32203,
+    "exit_code": 0,
+    "report": "/reports/0b13314f-1761-4714-9f7d-8d90cfea924c/summary.html",
+    "reused": false,
+    "run_id": "0b13314f-1761-4714-9f7d-8d90cfea924c",
+    "state": "SUCCEEDED"
+  },
+  "local_report_url": "http://127.0.0.1:8080",
+  "docker_runtime_verified": false,
+  "production_deployed": false
+}

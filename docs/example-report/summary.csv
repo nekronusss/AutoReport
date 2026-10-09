@@ -1,0 +1,2 @@
+﻿run_id,business_date,currency,orders_count,customers_count,ordered_amount,captured_amount,refunded_amount,net_collected_amount
+0b13314f-1761-4714-9f7d-8d90cfea924c,2026-09-30,KZT,50000,10000,24747750.00,23373075.00,0.00,23373075.00

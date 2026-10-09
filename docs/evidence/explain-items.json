@@ -1,0 +1,82 @@
+{
+  "QUERY PLAN": [
+    {
+      "Plan": {
+        "Node Type": "Aggregate",
+        "Strategy": "Sorted",
+        "Partial Mode": "Simple",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Startup Cost": 0.29,
+        "Total Cost": 8439.05,
+        "Plan Rows": 48296,
+        "Plan Width": 38,
+        "Actual Startup Time": 0.403,
+        "Actual Total Time": 106.533,
+        "Actual Rows": 50000.0,
+        "Actual Loops": 1,
+        "Disabled": false,
+        "Group Key": [
+          "order_id"
+        ],
+        "Shared Hit Blocks": 9484,
+        "Shared Read Blocks": 976,
+        "Shared Dirtied Blocks": 0,
+        "Shared Written Blocks": 227,
+        "Local Hit Blocks": 0,
+        "Local Read Blocks": 0,
+        "Local Dirtied Blocks": 0,
+        "Local Written Blocks": 0,
+        "Temp Read Blocks": 0,
+        "Temp Written Blocks": 0,
+        "Plans": [
+          {
+            "Node Type": "Index Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Scan Direction": "Forward",
+            "Index Name": "order_items_order_id_idx",
+            "Relation Name": "order_items",
+            "Alias": "order_items",
+            "Startup Cost": 0.29,
+            "Total Cost": 6935.35,
+            "Plan Rows": 90000,
+            "Plan Width": 16,
+            "Actual Startup Time": 0.391,
+            "Actual Total Time": 64.7,
+            "Actual Rows": 90000.0,
+            "Actual Loops": 1,
+            "Disabled": false,
+            "Index Searches": 1,
+            "Shared Hit Blocks": 9484,
+            "Shared Read Blocks": 976,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 227,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          }
+        ]
+      },
+      "Planning": {
+        "Shared Hit Blocks": 52,
+        "Shared Read Blocks": 18,
+        "Shared Dirtied Blocks": 2,
+        "Shared Written Blocks": 0,
+        "Local Hit Blocks": 0,
+        "Local Read Blocks": 0,
+        "Local Dirtied Blocks": 0,
+        "Local Written Blocks": 0,
+        "Temp Read Blocks": 0,
+        "Temp Written Blocks": 0
+      },
+      "Planning Time": 8.291,
+      "Triggers": [],
+      "Execution Time": 108.395
+    }
+  ]
+}
